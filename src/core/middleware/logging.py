@@ -6,6 +6,7 @@ import time
 import structlog
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
+from starlette.responses import Response
 
 logger = structlog.get_logger()
 
@@ -24,17 +25,29 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             path=request.url.path,
         )
 
-        response = await call_next(request)
-
-        duration_ms = (time.time() - start_time) * 1000
-
-        logger.info(
-            "request_end",
-            request_id=request_id,
-            method=request.method,
-            path=request.url.path,
-            status_code=response.status_code,
-            duration_ms=round(duration_ms, 2),
-        )
-
-        return response
+        response: Response | None = None
+        try:
+            response = await call_next(request)
+            return response
+        except Exception as exc:
+            duration_ms = (time.time() - start_time) * 1000
+            logger.exception(
+                "request_error",
+                request_id=request_id,
+                method=request.method,
+                path=request.url.path,
+                duration_ms=round(duration_ms, 2),
+                error_type=type(exc).__name__,
+            )
+            raise
+        finally:
+            if response is not None:
+                duration_ms = (time.time() - start_time) * 1000
+                logger.info(
+                    "request_end",
+                    request_id=request_id,
+                    method=request.method,
+                    path=request.url.path,
+                    status_code=response.status_code,
+                    duration_ms=round(duration_ms, 2),
+                )

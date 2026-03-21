@@ -33,6 +33,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 # Copy application code
 COPY src/ ./src/
+COPY alembic/ ./alembic/
 COPY alembic.ini .
 COPY pyproject.toml .
 
