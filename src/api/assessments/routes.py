@@ -26,9 +26,6 @@ from src.schemas.assessment import (
     DiffScenarioRequest,
     DiffScenarioResponse,
     ScenarioDiff,
-    FollowUpQueryRequest,
-    FollowUpQueryResponse,
-    CitedSource,
     ExportResponse,
     SubmitFeedbackRequest,
     SubmitFeedbackResponse,
@@ -110,35 +107,6 @@ async def diff_scenario(
     # Placeholder: Compute diff
     return DiffScenarioResponse(
         diff=ScenarioDiff(changed_constraints=[])
-    )
-
-
-@router.post("/assessments/{id}/query", response_model=FollowUpQueryResponse)
-async def follow_up_query(
-    id: UUID,
-    request: FollowUpQueryRequest,
-    db: AsyncSession = Depends(get_db),
-):
-    """
-    Ask a follow-up question about an assessment.
-
-    Uses RAG to retrieve relevant rules and generates an answer with citations.
-    """
-    logger.info(
-        "follow_up_query",
-        assessment_id=id,
-        question=request.question,
-    )
-
-    # Placeholder: RAG retrieval + LLM response
-    return FollowUpQueryResponse(
-        answer="Based on LAMC Chapter 12.07, the setback requirement...",
-        cited_sources=[
-            CitedSource(
-                source_url="https://codelibrary.amlegal.com/...",
-                page_number=45,
-            )
-        ],
     )
 
 

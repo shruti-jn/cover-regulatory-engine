@@ -15,6 +15,7 @@ from src.core.exceptions import APIException, api_exception_handler, general_exc
 from src.api.health import router as health_router
 from src.api.parcels.routes import router as parcels_router
 from src.api.geocoding.routes import router as geocoding_router, internal_router as internal_geocoding_router
+from src.api.query.routes import router as query_router
 from src.api.assessments.routes import router as assessments_router
 from src.api.admin.routes import router as admin_router
 
@@ -62,6 +63,7 @@ app.include_router(health_router, tags=["health"])
 app.include_router(geocoding_router)
 app.include_router(internal_geocoding_router)
 app.include_router(parcels_router)
+app.include_router(query_router)
 app.include_router(assessments_router)
 app.include_router(admin_router)
 
