@@ -2,7 +2,12 @@
 Geocoding schema exports.
 """
 
-from src.schemas.parcel import GeocodeCandidate, GeocodeResponse, StoreGCPMetadataRequest, StoreGCPMetadataResponse
+from src.schemas.geocoding.models import (
+    GeocodeCandidate,
+    GeocodeResponse,
+    StoreGCPMetadataRequest,
+    StoreGCPMetadataResponse,
+)
 
 __all__ = [
     "GeocodeCandidate",

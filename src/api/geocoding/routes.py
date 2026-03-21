@@ -7,20 +7,22 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, Header, Query
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+import structlog
 
+from src.core.exceptions import BadRequestException, ConflictException, NotFoundException
 from src.db.session import get_db
 from src.models.parcel import Parcel
-from src.schemas.parcel import (
+from src.schemas.geocoding import (
     GeocodeCandidate,
     GeocodeResponse,
     StoreGCPMetadataRequest,
     StoreGCPMetadataResponse,
 )
 from src.services.geocoding import get_geocoding_service
-from src.core.exceptions import BadRequestException, NotFoundException
 
 router = APIRouter(prefix="/api/v1/parcels", tags=["geocoding"])
 internal_router = APIRouter(prefix="/internal/v1", tags=["geocoding-internal"])
+logger = structlog.get_logger()
 
 
 @router.get("/geocode", response_model=GeocodeResponse)
@@ -29,7 +31,9 @@ async def geocode_address(
     apn: str | None = Query(None, description="Assessor Parcel Number"),
     geocoding_service=Depends(get_geocoding_service),
 ):
+    logger.info("geocode_address_request", address=address, apn=apn)
     candidates = await geocoding_service.geocode(address=address, apn=apn)
+    logger.info("geocode_address_response", address=address, apn=apn, candidate_count=len(candidates))
     return GeocodeResponse(
         candidates=[
             GeocodeCandidate(
@@ -52,6 +56,7 @@ async def store_gcp_metadata(
     if not idempotency_key.strip():
         raise BadRequestException("Idempotency key is required", field="Idempotency-Key")
 
+    logger.info("store_gcp_metadata_request", apn=request.apn, place_id=request.place_id)
     result = await db.execute(select(Parcel).where(Parcel.apn == request.apn))
     parcel = result.scalar_one_or_none()
     if parcel is None:
@@ -59,7 +64,16 @@ async def store_gcp_metadata(
 
     existing_key = (parcel.geocoding_metadata or {}).get("idempotency_key")
     if existing_key == idempotency_key:
+        logger.info("store_gcp_metadata_idempotent_replay", apn=request.apn, idempotency_key=idempotency_key)
         return StoreGCPMetadataResponse(status="success")
+    if existing_key and existing_key != idempotency_key:
+        logger.warning(
+            "store_gcp_metadata_conflict",
+            apn=request.apn,
+            existing_idempotency_key=existing_key,
+            incoming_idempotency_key=idempotency_key,
+        )
+        raise ConflictException("Geocoding metadata already stored for parcel")
 
     parcel.geocoding_metadata = {
         **(parcel.geocoding_metadata or {}),
@@ -68,4 +82,5 @@ async def store_gcp_metadata(
         "idempotency_key": idempotency_key,
     }
     await db.flush()
+    logger.info("store_gcp_metadata_success", apn=request.apn, idempotency_key=idempotency_key)
     return StoreGCPMetadataResponse(status="success")

@@ -15,6 +15,7 @@ from src.core.config import settings
 from src.core.exceptions import BadRequestException, GeocodingException, ServiceUnavailableException
 
 logger = structlog.get_logger()
+ALLOWED_ACCURACY_FLAGS = {"ROOFTOP", "INTERPOLATED"}
 
 
 @dataclass(slots=True)
@@ -49,6 +50,7 @@ class GeocodingService:
 
         query = address or apn
         client = self._get_client()
+        logger.info("geocoding_provider_request", query=query, lookup_type="address" if address else "apn")
 
         try:
             results = await anyio.to_thread.run_sync(client.geocode, query)
@@ -64,22 +66,36 @@ class GeocodingService:
 
         candidates = [self._normalize_candidate(result, fallback_apn=apn) for result in results]
         if not candidates:
+            logger.info("geocoding_no_candidates", query=query)
             return []
+        logger.info("geocoding_provider_success", query=query, candidate_count=len(candidates))
         return candidates
 
     def _normalize_candidate(self, result: dict[str, Any], *, fallback_apn: str | None) -> GeocodingCandidate:
         geometry = result.get("geometry", {})
         location = geometry.get("location", {})
         location_type = geometry.get("location_type", "UNKNOWN")
+        accuracy_flag = self._normalize_accuracy_flag(location_type)
 
         return GeocodingCandidate(
             apn=fallback_apn or "UNKNOWN",
             formatted_address=result.get("formatted_address", ""),
             place_id=result.get("place_id", ""),
-            accuracy_flag=location_type,
+            accuracy_flag=accuracy_flag,
             lat=location.get("lat"),
             lng=location.get("lng"),
         )
+
+    def _normalize_accuracy_flag(self, location_type: str) -> str:
+        if location_type in ALLOWED_ACCURACY_FLAGS:
+            return location_type
+
+        logger.info(
+            "geocoding_accuracy_flag_downgraded",
+            provider_location_type=location_type,
+            normalized_accuracy_flag="INTERPOLATED",
+        )
+        return "INTERPOLATED"
 
 
 _service: GeocodingService | None = None

@@ -1,0 +1,33 @@
+{
+  "task_id": "TASK-API-002",
+  "round": 1,
+  "timestamp": "2026-03-21T08:05:00-05:00",
+  "status": "fail",
+  "verification_type": "implementation_review",
+  "findings": [
+    {
+      "severity": "high",
+      "type": "contract_drift",
+      "location": "src/services/geocoding/service.py",
+      "summary": "Provider location types were returned directly even though the API contract only allows ROOFTOP or INTERPOLATED."
+    },
+    {
+      "severity": "high",
+      "type": "idempotency_regression",
+      "location": "src/api/geocoding/routes.py",
+      "summary": "POST /internal/v1/geocoding/metadata overwrote existing parcel geocoding metadata when a different idempotency key was supplied."
+    },
+    {
+      "severity": "medium",
+      "type": "observability_gap",
+      "location": "src/api/geocoding/routes.py",
+      "summary": "The new geocoding endpoints lacked task-specific structured logs for request, replay, conflict, and success paths."
+    },
+    {
+      "severity": "medium",
+      "type": "import_surface_regression",
+      "location": "src/api/parcels/__init__.py",
+      "summary": "The package export still referenced internal_router after the internal geocoding router moved to src/api/geocoding."
+    }
+  ]
+}
