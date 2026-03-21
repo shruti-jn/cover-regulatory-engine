@@ -15,6 +15,20 @@ from alembic import context
 from src.core.config import settings
 from src.db.base import Base
 
+# Import all models to register them with metadata
+# This ensures alembic autogenerate detects all tables
+from src.models import (  # noqa: F401
+    Parcel,
+    Assessment,
+    ParcelConstraint,
+    Feedback,
+    IngestedDocument,
+    ExtractedRule,
+    RuleProvenance,
+    User,
+    IngestionPipelineStatus,
+)
+
 # this is the Alembic Config object
 config = context.config
 
