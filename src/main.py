@@ -13,7 +13,8 @@ from src.core.middleware.request_id import RequestIdMiddleware
 from src.core.middleware.logging import LoggingMiddleware
 from src.core.exceptions import APIException, api_exception_handler, general_exception_handler
 from src.api.health import router as health_router
-from src.api.parcels.routes import router as parcels_router, internal_router as internal_parcels_router
+from src.api.parcels.routes import router as parcels_router
+from src.api.geocoding.routes import router as geocoding_router, internal_router as internal_geocoding_router
 from src.api.assessments.routes import router as assessments_router
 from src.api.admin.routes import router as admin_router
 
@@ -58,8 +59,9 @@ app.add_middleware(
 
 # Include routers
 app.include_router(health_router, tags=["health"])
+app.include_router(geocoding_router)
+app.include_router(internal_geocoding_router)
 app.include_router(parcels_router)
-app.include_router(internal_parcels_router)
 app.include_router(assessments_router)
 app.include_router(admin_router)
 

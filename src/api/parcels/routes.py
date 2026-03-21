@@ -2,75 +2,23 @@
 Parcel API routes.
 
 Implements:
-- GET /api/v1/parcels/geocode - Geocode address or APN
 - GET /api/v1/parcels/{apn} - Get parcel facts
-- POST /internal/v1/geocoding/metadata - Store GCP metadata
 """
 
-from typing import Optional
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Query, HTTPException, status
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 import structlog
 
 from src.db.session import get_db
 from src.schemas.parcel import (
-    GeocodeRequest,
-    GeocodeResponse,
-    GeocodeCandidate,
     ParcelResponse,
-    StoreGCPMetadataRequest,
-    StoreGCPMetadataResponse,
     GeoJSONGeometry,
-)
-from src.core.exceptions import (
-    NotFoundException,
-    BadRequestException,
-    GeocodingException,
-    create_error_response,
 )
 
 logger = structlog.get_logger()
 router = APIRouter(prefix="/api/v1/parcels", tags=["parcels"])
-internal_router = APIRouter(prefix="/internal/v1", tags=["internal"])
-
-
-@router.get("/geocode", response_model=GeocodeResponse)
-async def geocode_address(
-    address: Optional[str] = Query(None, description="Street address to geocode"),
-    apn: Optional[str] = Query(None, description="Assessor Parcel Number"),
-    db: AsyncSession = Depends(get_db),
-):
-    """
-    Geocode an address or APN to find matching parcels.
-
-    Returns candidates with GCP Place IDs and accuracy flags.
-    """
-    if not address and not apn:
-        raise BadRequestException(
-            "Either address or APN must be provided",
-            field="query",
-        )
-
-    logger.info(
-        "geocode_request",
-        address=address,
-        apn=apn,
-    )
-
-    # Placeholder: In production, call GCP Geocoding API
-    # For now, return mock data
-    candidates = [
-        GeocodeCandidate(
-            apn="1234-567-890",
-            formatted_address="123 Main St, Los Angeles, CA 90012",
-            place_id="ChIJ...",
-            accuracy_flag="ROOFTOP",
-        )
-    ]
-
-    return GeocodeResponse(candidates=candidates)
 
 
 @router.get("/{apn}", response_model=ParcelResponse)
@@ -107,24 +55,3 @@ async def get_parcel_facts(
         created_at="2026-03-21T12:00:00",
         updated_at="2026-03-21T12:00:00",
     )
-
-
-@internal_router.post("/geocoding/metadata", response_model=StoreGCPMetadataResponse)
-async def store_gcp_metadata(
-    request: StoreGCPMetadataRequest,
-    db: AsyncSession = Depends(get_db),
-):
-    """
-    Store GCP geocoding metadata for a parcel.
-
-    Internal endpoint for the geocoding service.
-    Requires idempotency key.
-    """
-    logger.info(
-        "store_gcp_metadata",
-        apn=request.apn,
-        place_id=request.place_id,
-    )
-
-    # Placeholder: Store metadata in database
-    return StoreGCPMetadataResponse(status="success")

@@ -1,0 +1,13 @@
+{
+  "task_id": "TASK-API-002",
+  "round": 1,
+  "timestamp": "2026-03-21T08:07:00-05:00",
+  "result": "remediation_required",
+  "actions_taken": [
+    "Created task-local geocoding schemas under src/schemas/geocoding and switched the geocoding routes to import them directly.",
+    "Normalized provider accuracy flags to the contract-supported values ROOFTOP and INTERPOLATED.",
+    "Added structured logs for geocoding requests, provider outcomes, metadata writes, idempotent replays, and conflicts.",
+    "Prevented conflicting metadata overwrites by returning a 409 conflict when a parcel already has geocoding metadata stored under a different idempotency key.",
+    "Updated src/api/parcels/__init__.py so its exports match the post-refactor router layout."
+  ]
+}
