@@ -41,8 +41,9 @@ class IngestedDocument(Base):
     # Raw text content extracted from the document
     raw_text: Mapped[str] = mapped_column(Text, nullable=False)
 
-    # Additional metadata about the document
-    metadata: Mapped[dict] = mapped_column(JSONB, default=dict)
+    # Additional metadata about the document.
+    # The Python attribute avoids SQLAlchemy's reserved Declarative name.
+    document_metadata: Mapped[dict] = mapped_column("metadata", JSONB, default=dict)
 
     # Relationships
     extracted_rules: Mapped[List["ExtractedRule"]] = relationship(
