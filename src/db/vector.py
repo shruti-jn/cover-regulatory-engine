@@ -7,7 +7,7 @@ Uses HNSW indexes with cosine distance for similarity search.
 from typing import List, Optional, Tuple
 from uuid import UUID
 
-from sqlalchemy import select, func
+from sqlalchemy import select, func, text
 from sqlalchemy.ext.asyncio import AsyncSession
 from pgvector.sqlalchemy import Vector
 
@@ -201,15 +201,15 @@ async def create_hnsw_index(
     index_name = f"idx_{table_name}_{column_name}_hnsw"
 
     # Drop existing index if exists
-    await session.execute(f"DROP INDEX IF EXISTS {index_name}")
+    await session.execute(text(f"DROP INDEX IF EXISTS {index_name}"))
 
     # Create HNSW index with cosine distance operator
-    await session.execute(f"""
+    await session.execute(text(f"""
         CREATE INDEX {index_name}
         ON {table_name}
         USING hnsw ({column_name} vector_cosine_ops)
         WITH (m = {m}, ef_construction = {ef_construction})
-    """)
+    """))
 
     await session.commit()
 
@@ -228,7 +228,7 @@ async def set_search_ef(
         session: Database session
         ef_search: ef_search parameter value
     """
-    await session.execute(f"SET hnsw.ef_search = {ef_search}")
+    await session.execute(text(f"SET hnsw.ef_search = {ef_search}"))
 
 
 def should_use_halfvec(dimensions: int) -> bool:
