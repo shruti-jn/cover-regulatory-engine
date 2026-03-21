@@ -1,0 +1,25 @@
+{
+  "task_id": "TASK-FSM-001",
+  "round": 1,
+  "timestamp": "2026-03-21T09:25:00-05:00",
+  "status": "pass",
+  "verification_type": "runtime_verification",
+  "checks": [
+    {
+      "name": "fsm_tests",
+      "status": "pass",
+      "evidence": ".venv312/bin/pytest tests/test_task_api_003.py tests/test_task_fsm_001.py -q",
+      "details": "8 passed in 2.44s"
+    },
+    {
+      "name": "fsm_syntax_validation",
+      "status": "pass",
+      "evidence": ".venv312/bin/python -m py_compile src/models/fsm/__init__.py src/models/fsm/definitions.py src/services/fsm/__init__.py src/services/fsm/service.py tests/test_task_fsm_001.py"
+    },
+    {
+      "name": "contract_behavior",
+      "status": "pass",
+      "evidence": "ParcelEvaluationSync and RuleExtractionAsync transitions, action hooks, invalid transition rejection, and ERROR_RECOVERABLE retry/reset paths are covered by executable tests."
+    }
+  ]
+}
