@@ -1,0 +1,39 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "name": "cover-regulatory-engine",
+  "services": {
+    "backend": {
+      "name": "api",
+      "dockerfile": "docker/backend.Dockerfile",
+      "healthcheck": {
+        "path": "/health",
+        "port": 8000,
+        "interval": 30,
+        "timeout": 10,
+        "retries": 3
+      },
+      "env": {
+        "DATABASE_URL": "${{Postgres.DATABASE_URL}}",
+        "DATABASE_PUBLIC_URL": "${{Postgres.DATABASE_PUBLIC_URL}}"
+      },
+      "depends_on": ["database"]
+    },
+    "frontend": {
+      "name": "web",
+      "dockerfile": "docker/frontend.Dockerfile",
+      "healthcheck": {
+        "path": "/",
+        "port": 80,
+        "interval": 30,
+        "timeout": 10,
+        "retries": 3
+      }
+    },
+    "database": {
+      "name": "Postgres",
+      "type": "database",
+      "vendor": "postgres",
+      "extensions": ["postgis", "pgvector"]
+    }
+  }
+}
