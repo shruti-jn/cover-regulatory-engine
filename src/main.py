@@ -45,7 +45,6 @@ app = FastAPI(
 # Add exception handlers
 app.add_exception_handler(APIException, api_exception_handler)
 app.add_exception_handler(Exception, general_exception_handler)
-
 # Add middleware
 app.add_middleware(RequestIdMiddleware)
 app.add_middleware(LoggingMiddleware)
