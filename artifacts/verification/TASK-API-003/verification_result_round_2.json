@@ -1,0 +1,35 @@
+{
+  "task_id": "TASK-API-003",
+  "round": 2,
+  "timestamp": "2026-03-21T09:05:00-05:00",
+  "status": "pass_with_warnings",
+  "verification_type": "runtime_verification",
+  "checks": [
+    {
+      "name": "app_imports",
+      "status": "pass",
+      "evidence": ".venv312/bin/python -c 'import importlib; [importlib.import_module(m) for m in [\"src.main\", \"src.api.parcels.routes\", \"src.services.parcels.service\"]]'"
+    },
+    {
+      "name": "task_api_003_tests",
+      "status": "pass",
+      "evidence": ".venv312/bin/pytest tests/test_task_api_003.py -q",
+      "details": "4 passed in 0.41s"
+    },
+    {
+      "name": "syntax_validation",
+      "status": "pass",
+      "evidence": ".venv312/bin/python -m py_compile tests/conftest.py tests/test_task_api_003.py src/api/parcels/routes.py src/services/parcels/__init__.py src/services/parcels/service.py src/schemas/base.py src/models/ingested_document.py"
+    }
+  ],
+  "warnings": [
+    {
+      "type": "temporary_dependency_unblock",
+      "summary": "FastAPI is temporarily pinned to >=0.128.8,<0.129.0 because the current package index visible from this environment does not expose 0.135.0."
+    },
+    {
+      "type": "framework_blockers_fixed_during_verification",
+      "summary": "Executable verification also surfaced and required fixes for a reserved SQLAlchemy attribute name and an invalid generic schema base before the app could import cleanly."
+    }
+  ]
+}

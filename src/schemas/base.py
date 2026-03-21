@@ -4,11 +4,14 @@ Base Pydantic v2 schemas with standardized error envelope.
 All request/response models inherit from these base classes.
 """
 
-from typing import Any, Optional, TypeVar, Generic
+from typing import Optional, TypeVar, Generic
 from datetime import datetime
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
+
+
+T = TypeVar("T")
 
 
 class BaseSchema(BaseModel):
@@ -45,10 +48,10 @@ class SuccessResponse(BaseSchema):
     status: str = "success"
 
 
-class PaginatedResponse(BaseSchema, Generic):
+class PaginatedResponse(BaseSchema, Generic[T]):
     """Base paginated response."""
 
-    items: list[Any]
+    items: list[T]
     total: int
     page: int
     page_size: int

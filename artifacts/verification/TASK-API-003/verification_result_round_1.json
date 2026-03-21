@@ -1,0 +1,25 @@
+{
+  "task_id": "TASK-API-003",
+  "round": 1,
+  "timestamp": "2026-03-21T08:25:00-05:00",
+  "status": "pass_with_warnings",
+  "verification_type": "implementation_review_and_static_validation",
+  "checks": [
+    {
+      "name": "syntax_validation",
+      "status": "pass",
+      "evidence": "python3 -m py_compile src/api/parcels/routes.py src/services/parcels/__init__.py src/services/parcels/service.py"
+    },
+    {
+      "name": "contract_alignment",
+      "status": "pass",
+      "evidence": "GET /api/v1/parcels/{apn} now uses an async service-backed parcel lookup, returns 404 when missing, and serializes geometry to GeoJSON via Shapely mapping(to_shape(...))."
+    }
+  ],
+  "warnings": [
+    {
+      "type": "environment_blocker",
+      "summary": "Full dependency-based runtime verification remains blocked by the pre-existing requirement fastapi>=0.135.0, which is not installable from the available package index in this environment."
+    }
+  ]
+}
