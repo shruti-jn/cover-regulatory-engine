@@ -24,16 +24,13 @@ from src.db.vector import (
 )
 
 __all__ = [
-    # Base
     "Base",
-    # Session
     "engine",
     "AsyncSessionLocal",
     "get_db",
     "init_db",
     "close_db",
     "create_indexes",
-    # Vector
     "VectorSearchConfig",
     "VectorSearchResult",
     "search_similar_rules",
