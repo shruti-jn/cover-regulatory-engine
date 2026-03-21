@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import (
     AsyncSession,
     async_sessionmaker,
 )
-from sqlalchemy import Index
+from sqlalchemy import text
 
 from src.core.config import settings
 from src.db.base import Base
@@ -66,11 +66,13 @@ async def create_indexes():
                     index_name = f"idx_{table_name}_{column.name}_gist"
                     # Create GiST index using raw SQL
                     await conn.execute(
-                        f"""
+                        text(
+                            f"""
                         CREATE INDEX IF NOT EXISTS {index_name}
                         ON {table_name}
                         USING GIST ({column.name})
                         """
+                        )
                     )
 
 
