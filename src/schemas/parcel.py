@@ -7,7 +7,7 @@ from uuid import UUID
 
 from pydantic import Field
 
-from src.schemas.base import BaseSchema, TimestampedSchema, UUIDSchema
+from src.schemas.base import BaseSchema, TimestampedSchema, UUIDSchema, SuccessResponse
 
 
 class GeoCodingMetadata(BaseSchema):
