@@ -1,0 +1,30 @@
+{
+  "task_id": "TASK-API-006",
+  "round": 1,
+  "timestamp": "2026-03-21T11:10:00-05:00",
+  "status": "pass_with_warnings",
+  "verification_type": "runtime_verification",
+  "checks": [
+    {
+      "name": "export_tests",
+      "status": "pass",
+      "evidence": ".venv312/bin/pytest tests/test_task_api_003.py tests/test_task_fsm_001.py tests/test_task_api_005.py tests/test_task_api_004.py tests/test_task_api_007.py tests/test_task_api_006.py -q",
+      "details": "21 passed in 3.01s"
+    },
+    {
+      "name": "export_imports",
+      "status": "pass",
+      "evidence": ".venv312/bin/python -c 'import importlib; [importlib.import_module(m) for m in [\"src.main\", \"src.api.export.routes\", \"src.services.export.service\"]]'"
+    }
+  ],
+  "warnings": [
+    {
+      "type": "scope_mismatch",
+      "summary": "Activating the export route required touching src/main.py and removing the old placeholder export handler from src/api/assessments/routes.py."
+    },
+    {
+      "type": "download_url_shape",
+      "summary": "download_url currently returns an absolute local file path to the generated export artifact rather than a served HTTP URL because a download-serving subsystem does not yet exist."
+    }
+  ]
+}

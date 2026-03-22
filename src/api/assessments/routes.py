@@ -26,7 +26,6 @@ from src.schemas.assessment import (
     DiffScenarioRequest,
     DiffScenarioResponse,
     ScenarioDiff,
-    ExportResponse,
 )
 from src.services.assessments import get_assessment_service
 
@@ -81,29 +80,5 @@ async def diff_scenario(
         db=db,
         base_scenario_id=UUID(request.base_scenario_id),
         new_scenario_id=UUID(request.new_scenario_id),
-    )
-
-
-@router.post("/assessments/{id}/export", response_model=ExportResponse)
-async def export_assessment(
-    id: UUID,
-    db: AsyncSession = Depends(get_db),
-):
-    """
-    Export an assessment to PDF or CSV.
-
-    Returns a download URL and lists included fields and unresolved items.
-    """
-    logger.info(
-        "export_assessment",
-        assessment_id=id,
-    )
-
-    # Placeholder: Generate export
-    return ExportResponse(
-        download_url="https://storage.example.com/exports/123.pdf",
-        format="pdf",
-        included_fields=["constraints", "evidence", "geometry"],
-        unresolved_items=[],
     )
 

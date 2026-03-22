@@ -18,6 +18,7 @@ from src.api.geocoding.routes import router as geocoding_router, internal_router
 from src.api.query.routes import router as query_router
 from src.api.assessments.routes import router as assessments_router, internal_router as internal_assessments_router
 from src.api.feedback.routes import router as feedback_router
+from src.api.export.routes import router as export_router
 from src.api.admin.routes import router as admin_router
 
 logger = structlog.get_logger()
@@ -67,6 +68,7 @@ app.include_router(parcels_router)
 app.include_router(query_router)
 app.include_router(assessments_router)
 app.include_router(feedback_router)
+app.include_router(export_router)
 app.include_router(internal_assessments_router)
 app.include_router(admin_router)
 
