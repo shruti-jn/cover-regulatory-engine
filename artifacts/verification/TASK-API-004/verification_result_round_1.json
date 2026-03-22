@@ -1,0 +1,35 @@
+{
+  "task_id": "TASK-API-004",
+  "round": 1,
+  "timestamp": "2026-03-21T10:20:00-05:00",
+  "status": "pass_with_warnings",
+  "verification_type": "runtime_verification",
+  "checks": [
+    {
+      "name": "assessment_tests",
+      "status": "pass",
+      "evidence": ".venv312/bin/pytest tests/test_task_api_003.py tests/test_task_fsm_001.py tests/test_task_api_005.py tests/test_task_api_004.py -q",
+      "details": "14 passed in 2.18s"
+    },
+    {
+      "name": "assessment_imports",
+      "status": "pass",
+      "evidence": ".venv312/bin/python -c 'import importlib; [importlib.import_module(m) for m in [\"src.main\", \"src.api.assessments.routes\", \"src.services.assessments.service\"]]'"
+    },
+    {
+      "name": "assessment_syntax_validation",
+      "status": "pass",
+      "evidence": ".venv312/bin/python -m py_compile src/api/assessments/routes.py src/services/assessments/__init__.py src/services/assessments/service.py tests/test_task_api_004.py"
+    }
+  ],
+  "warnings": [
+    {
+      "type": "scope_mismatch",
+      "summary": "Activating the internal scenario diff route required touching src/main.py in addition to the assessment API/service surface."
+    },
+    {
+      "type": "data_model_gap",
+      "summary": "Assessment rule selection currently uses the deterministic rule store without a strong jurisdiction filter because the current parcel/assessment data model does not yet persist jurisdiction directly."
+    }
+  ]
+}
