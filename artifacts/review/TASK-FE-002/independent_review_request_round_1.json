@@ -1,0 +1,21 @@
+{
+  "task_id": "TASK-FE-002",
+  "round": 1,
+  "status": "requested",
+  "requested_review_type": "findings_first_code_review",
+  "scope": [
+    "frontend/src/features/parcel-lookup/",
+    "frontend/src/components/map/"
+  ],
+  "focus_areas": [
+    "MapLibre parcel rendering and lazy loading",
+    "accuracy flag visibility and parcel confirmation workflow",
+    "recoverable frontend failure handling",
+    "narrow integration seam into FE-001 shell"
+  ],
+  "artifacts": [
+    "artifacts/verification/TASK-FE-002/verification_result_round_1.json",
+    "artifacts/verification/TASK-FE-002/verification_response_round_1.json",
+    "artifacts/verification/TASK-FE-002/frontend_parcel_lookup_round_1.png"
+  ]
+}

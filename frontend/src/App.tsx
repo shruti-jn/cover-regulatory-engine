@@ -1,10 +1,4 @@
-const searchPills = ["90026", "RS-1", "ADU", "HPOZ"];
-const parcelFacts = [
-  ["APN", "5419-023-018"],
-  ["Zone", "RD2-1VL"],
-  ["Lot Size", "6,812 sf"],
-  ["Overlays", "Hillside, Baseline Mansionization"],
-];
+import { ParcelLookupWorkspace } from "./features/parcel-lookup/ParcelLookupWorkspace";
 
 const evidenceItems = [
   {
@@ -23,6 +17,8 @@ const evidenceItems = [
     note: "Await parcel-specific frontage verification",
   },
 ];
+
+const searchPills = ["90026", "RS-1", "ADU", "HPOZ"];
 
 export default function App() {
   return (
@@ -78,51 +74,9 @@ export default function App() {
           </div>
         </section>
 
-        <section className="map-stage" id="map-stage" aria-label="Parcel map stage">
-          <div className="map-toolbar">
-            <div className="mode-toggle">
-              <button className="mode-toggle-active" type="button">
-                2D
-              </button>
-              <button type="button">3D</button>
-            </div>
-            <div className="legend-pill">MapLibre shell ready</div>
-          </div>
-
-          <div className="map-canvas">
-            <div className="parcel-shape">
-              <div className="setback-band setback-top" />
-              <div className="setback-band setback-right" />
-              <div className="setback-band setback-bottom" />
-              <div className="setback-band setback-left" />
-              <div className="envelope" />
-            </div>
-            <div className="map-annotations">
-              <span>Parcel focus</span>
-              <span>Setback geometry</span>
-              <span>Future overlay layers</span>
-            </div>
-          </div>
-        </section>
+        <ParcelLookupWorkspace />
 
         <aside className="evidence-panel" id="evidence-panel">
-          <section className="panel-card">
-            <div className="panel-heading">
-              <p className="eyebrow">Parcel facts</p>
-              <button type="button" className="ghost-action">
-                Refresh sources
-              </button>
-            </div>
-            <dl className="fact-list">
-              {parcelFacts.map(([label, value]) => (
-                <div key={label}>
-                  <dt>{label}</dt>
-                  <dd>{value}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-
           <section className="panel-card">
             <div className="panel-heading">
               <p className="eyebrow">Evidence and citations</p>

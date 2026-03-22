@@ -1,0 +1,150 @@
+.parcel-lookup-workspace {
+  display: grid;
+  gap: var(--space-6);
+  grid-area: map;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.72fr);
+  grid-template-areas:
+    "controls controls"
+    "map facts";
+}
+
+.lookup-controls {
+  align-items: center;
+  background: rgba(255, 253, 248, 0.76);
+  border: 1px solid rgba(216, 210, 200, 0.82);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-panel);
+  display: grid;
+  gap: var(--space-4);
+  grid-area: controls;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
+  padding: var(--space-6);
+}
+
+.lookup-form {
+  align-items: end;
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.search-field-parcel {
+  margin: 0;
+}
+
+.lookup-meta {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.accuracy-cluster {
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.accuracy-pill {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  padding: 0.5rem 0.9rem;
+}
+
+.accuracy-rooftop {
+  background: rgba(62, 107, 87, 0.12);
+  color: var(--color-success);
+}
+
+.accuracy-interpolated {
+  background: rgba(157, 107, 47, 0.12);
+  color: var(--color-warning);
+}
+
+.lookup-hint p {
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.recoverable-message {
+  color: var(--color-danger);
+}
+
+.parcel-map-panel {
+  display: grid;
+  gap: 1rem;
+  grid-area: map;
+}
+
+.parcel-map-frame {
+  background: rgba(255, 253, 248, 0.76);
+  border: 1px solid rgba(216, 210, 200, 0.82);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-panel);
+  min-height: 30rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.loading-map {
+  align-items: center;
+  color: var(--color-muted);
+  display: flex;
+  justify-content: center;
+}
+
+.parcel-map-canvas {
+  height: 100%;
+  min-height: 30rem;
+  width: 100%;
+}
+
+.map-empty-state {
+  align-items: center;
+  backdrop-filter: blur(8px);
+  background: rgba(255, 253, 248, 0.82);
+  border-radius: 999px;
+  bottom: 1rem;
+  color: var(--color-muted);
+  display: inline-flex;
+  left: 1rem;
+  padding: 0.5rem 0.85rem;
+  position: absolute;
+}
+
+.map-confirmation-card {
+  background: rgba(255, 253, 248, 0.76);
+  border: 1px solid rgba(216, 210, 200, 0.82);
+  border-radius: 18px;
+  box-shadow: var(--shadow-panel);
+  padding: 1rem 1.1rem;
+}
+
+.map-confirmation-card p {
+  color: var(--color-muted);
+  margin: 0.45rem 0 0;
+}
+
+.parcel-facts-panel {
+  display: grid;
+  gap: var(--space-6);
+  grid-area: facts;
+}
+
+@media (max-width: 1100px) {
+  .parcel-lookup-workspace,
+  .lookup-controls {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "controls"
+      "map"
+      "facts";
+  }
+}
+
+@media (max-width: 720px) {
+  .lookup-form {
+    grid-template-columns: 1fr;
+  }
+}
