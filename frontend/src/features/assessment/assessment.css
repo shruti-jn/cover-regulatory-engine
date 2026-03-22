@@ -1,0 +1,143 @@
+.assessment-workspace {
+  display: grid;
+  gap: var(--space-6);
+  grid-area: panel;
+}
+
+.assessment-summary-header {
+  align-items: start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.assessment-metrics {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.assessment-metrics > div {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.visualization-stage {
+  display: grid;
+  gap: 1rem;
+}
+
+.visual-stage-scene {
+  background:
+    linear-gradient(135deg, rgba(123, 159, 181, 0.11), rgba(255, 253, 248, 0.8)),
+    linear-gradient(90deg, rgba(95, 107, 118, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(95, 107, 118, 0.08) 1px, transparent 1px);
+  background-size: auto, 2rem 2rem, 2rem 2rem;
+  border-radius: 20px;
+  min-height: 16rem;
+  overflow: hidden;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.visual-parcel-shell {
+  background: rgba(123, 159, 181, 0.14);
+  border: 2px solid rgba(72, 104, 121, 0.68);
+  border-radius: 24px;
+  height: 12rem;
+  margin: 0 auto;
+  max-width: 14rem;
+  position: relative;
+}
+
+.visual-envelope {
+  border: 2px dashed rgba(196, 109, 74, 0.78);
+  border-radius: 20px;
+  inset: 1.2rem;
+  position: absolute;
+}
+
+.visual-volume {
+  background: linear-gradient(180deg, rgba(111, 138, 122, 0.42), rgba(111, 138, 122, 0.08));
+  border: 1px solid rgba(62, 107, 87, 0.44);
+  border-radius: 14px 14px 10px 10px;
+  bottom: 1.4rem;
+  inset-inline: 2.3rem;
+  position: absolute;
+  top: 2rem;
+  transform: skew(-8deg);
+}
+
+.visual-stage-3d .visual-parcel-shell {
+  transform: perspective(700px) rotateX(48deg);
+}
+
+.visual-stage-caption {
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  margin-top: 1rem;
+}
+
+.scenario-options {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.scenario-option {
+  align-items: start;
+  background: rgba(255, 253, 248, 0.6);
+  border: 1px solid rgba(216, 210, 200, 0.82);
+  border-radius: 18px;
+  color: var(--color-ink);
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.9rem 1rem;
+  text-align: left;
+}
+
+.scenario-option span,
+.scenario-diff-card,
+.scenario-diff-card li span {
+  color: var(--color-muted);
+}
+
+.scenario-option-active {
+  border-color: rgba(111, 138, 122, 0.54);
+  box-shadow: inset 0 0 0 1px rgba(111, 138, 122, 0.28);
+}
+
+.scenario-diff-card {
+  background: rgba(255, 253, 248, 0.6);
+  border-radius: 18px;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.scenario-diff-card ul {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.scenario-diff-card li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.scenario-diff-empty {
+  margin: 0;
+}
+
+.constraint-list {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (max-width: 720px) {
+  .assessment-metrics {
+    flex-direction: column;
+  }
+}

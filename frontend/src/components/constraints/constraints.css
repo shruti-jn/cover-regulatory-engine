@@ -1,0 +1,84 @@
+.provenance-badge {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.8rem;
+  gap: 0.45rem;
+  padding: 0.45rem 0.8rem;
+  text-transform: capitalize;
+}
+
+.provenance-dot {
+  border-radius: 999px;
+  height: 0.45rem;
+  width: 0.45rem;
+}
+
+.provenance-deterministic {
+  background: rgba(62, 107, 87, 0.12);
+  color: var(--color-success);
+}
+
+.provenance-deterministic .provenance-dot {
+  background: var(--color-success);
+}
+
+.provenance-interpreted {
+  background: rgba(157, 107, 47, 0.12);
+  color: var(--color-warning);
+}
+
+.provenance-interpreted .provenance-dot {
+  background: var(--color-warning);
+}
+
+.provenance-unresolved {
+  background: rgba(157, 77, 68, 0.12);
+  color: var(--color-danger);
+}
+
+.provenance-unresolved .provenance-dot {
+  background: var(--color-danger);
+}
+
+.constraint-card {
+  border: 1px solid rgba(216, 210, 200, 0.75);
+  border-radius: 20px;
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
+}
+
+.constraint-card-header {
+  align-items: start;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.constraint-value {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.constraint-meta {
+  align-items: center;
+  color: var(--color-muted);
+  display: flex;
+  font-size: 0.85rem;
+  gap: 0.85rem;
+  justify-content: space-between;
+}
+
+.citation-link {
+  background: transparent;
+  border: 0;
+  color: var(--color-accent-sage);
+  padding: 0;
+}
+
+.constraint-evidence {
+  color: var(--color-muted);
+  margin: 0;
+}

@@ -1,0 +1,10 @@
+{
+  "task_id": "TASK-FE-003",
+  "summary": "Frontend tests and build passed for the assessment workspace; visual verification pending screenshot capture.",
+  "evidence": [
+    "frontend/src/features/assessment/AssessmentWorkspace.tsx",
+    "frontend/src/features/assessment/AssessmentWorkspace.test.tsx",
+    "frontend/src/components/constraints/ConstraintCard.tsx",
+    "frontend/src/components/constraints/ProvenanceBadge.tsx"
+  ]
+}

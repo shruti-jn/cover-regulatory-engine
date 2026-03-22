@@ -1,0 +1,15 @@
+{
+  "task_id": "TASK-FE-003",
+  "review_type": "independent_code_review_request",
+  "status": "requested",
+  "focus_areas": [
+    "visual acceptance criteria compliance",
+    "2D/3D mode behavior",
+    "scenario diff clarity",
+    "provenance and citation presentation"
+  ],
+  "artifacts": [
+    "artifacts/verification/TASK-FE-003/verification_result_round_1.json",
+    "artifacts/verification/TASK-FE-003/verification_response_round_1.json"
+  ]
+}

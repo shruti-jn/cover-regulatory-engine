@@ -1,22 +1,5 @@
 import { ParcelLookupWorkspace } from "./features/parcel-lookup/ParcelLookupWorkspace";
-
-const evidenceItems = [
-  {
-    title: "Front setback controls envelope depth",
-    state: "deterministic",
-    note: "LAMC frontage rule applied with parcel geometry",
-  },
-  {
-    title: "Hillside interpretation still open",
-    state: "interpreted",
-    note: "Escalate for manual confirmation before client export",
-  },
-  {
-    title: "Driveway width still unresolved",
-    state: "unresolved",
-    note: "Await parcel-specific frontage verification",
-  },
-];
+import { AssessmentWorkspace } from "./features/assessment/AssessmentWorkspace";
 
 const searchPills = ["90026", "RS-1", "ADU", "HPOZ"];
 
@@ -76,25 +59,7 @@ export default function App() {
 
         <ParcelLookupWorkspace />
 
-        <aside className="evidence-panel" id="evidence-panel">
-          <section className="panel-card">
-            <div className="panel-heading">
-              <p className="eyebrow">Evidence and citations</p>
-              <span className="source-timestamp">Updated Mar 22</span>
-            </div>
-            <div className="evidence-list">
-              {evidenceItems.map((item) => (
-                <article key={item.title} className="evidence-item">
-                  <div className="evidence-header">
-                    <h3>{item.title}</h3>
-                    <span className={`state-pill state-${item.state}`}>{item.state}</span>
-                  </div>
-                  <p>{item.note}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-        </aside>
+        <AssessmentWorkspace />
       </main>
     </div>
   );
