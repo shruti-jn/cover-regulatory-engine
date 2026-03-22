@@ -8,6 +8,8 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
 
+from src.core.observability import get_request_id
+
 logger = structlog.get_logger()
 
 
@@ -16,10 +18,11 @@ class LoggingMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next):
         start_time = time.time()
-        request_id = getattr(request.state, "request_id", "unknown")
+        request_id = get_request_id(getattr(request.state, "request_id", "unknown"))
 
         logger.info(
             "request_start",
+            event_key="request_start",
             request_id=request_id,
             method=request.method,
             path=request.url.path,
@@ -33,6 +36,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             duration_ms = (time.time() - start_time) * 1000
             logger.exception(
                 "request_error",
+                event_key="request_error",
                 request_id=request_id,
                 method=request.method,
                 path=request.url.path,
@@ -45,6 +49,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
                 duration_ms = (time.time() - start_time) * 1000
                 logger.info(
                     "request_end",
+                    event_key="request_end",
                     request_id=request_id,
                     method=request.method,
                     path=request.url.path,
