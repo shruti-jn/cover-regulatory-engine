@@ -1,0 +1,13 @@
+{
+  "task_id": "TASK-RAG-001",
+  "round": 1,
+  "verifier": "codex",
+  "review_mode": "independent_task_verification",
+  "finding_count": 0,
+  "findings": [],
+  "residual_risks": [
+    "Admin API wiring for queued jobs remains in TASK-API-008; this task only establishes the ingestion service and worker layer.",
+    "PDF extraction falls back to plain-text decoding when pypdf extraction is unavailable or returns no text."
+  ],
+  "decision": "ready_for_merge"
+}
