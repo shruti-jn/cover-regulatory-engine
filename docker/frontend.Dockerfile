@@ -1,20 +1,19 @@
 # syntax=docker/dockerfile:1
-FROM nginx:alpine as production
+FROM node:20-alpine AS builder
 
-# Provide a simple placeholder until the frontend app is implemented.
-RUN printf '%s\n' \
-  '<!doctype html>' \
-  '<html lang="en">' \
-  '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cover Regulatory Engine</title></head>' \
-  '<body><main><h1>Cover Regulatory Engine</h1><p>Frontend scaffold is deployed. Application UI will be added in a later task.</p></main></body>' \
-  '</html>' \
-  > /usr/share/nginx/html/index.html
+WORKDIR /app/frontend
 
-# Copy nginx configuration
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci
+
+COPY frontend/ ./
+RUN npm run build
+
+FROM nginx:alpine AS production
+
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/frontend/dist/ /usr/share/nginx/html/
 
-# Expose port
 EXPOSE 80
 
-# Start nginx
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,24 @@
+{
+  "platform": "Railway",
+  "services": [
+    {
+      "name": "api",
+      "dockerfile": "docker/backend.Dockerfile",
+      "port": 8000
+    },
+    {
+      "name": "web",
+      "dockerfile": "docker/frontend.Dockerfile",
+      "port": 80
+    },
+    {
+      "name": "Postgres",
+      "type": "database",
+      "extensions": [
+        "postgis",
+        "pgvector"
+      ]
+    }
+  ],
+  "source_of_truth": "railway.json"
+}
