@@ -1,0 +1,40 @@
+{
+  "task_id": "TASK-RAG-001",
+  "round": 1,
+  "status": "pass",
+  "verification_type": "runnable_backend_tests",
+  "summary": "Implemented checksum-based ingestion service and RAG worker with deterministic rule persistence, embeddings, provenance, and job status transitions.",
+  "assertions_verified": [
+    {
+      "assertion_id": "TASK-RAG-001-A1",
+      "status": "pass",
+      "evidence": "tests/test_task_rag_001.py::test_ingestion_service_processes_text_and_persists_rules"
+    },
+    {
+      "assertion_id": "TASK-RAG-001-A2",
+      "status": "pass",
+      "evidence": "tests/test_task_rag_001.py::test_ingestion_service_skips_duplicate_checksum"
+    },
+    {
+      "assertion_id": "TASK-RAG-001-A3",
+      "status": "pass",
+      "evidence": "Service persists ExtractedRule and RuleProvenance records; no runtime LLM dependency introduced in ingestion flow."
+    },
+    {
+      "assertion_id": "TASK-RAG-001-A4",
+      "status": "pass",
+      "evidence": "tests/test_task_rag_001.py::test_worker_runs_job_and_returns_completed_summary"
+    }
+  ],
+  "commands": [
+    ".venv312/bin/pytest tests/test_task_rag_001.py -q",
+    ".venv312/bin/pytest tests/test_task_api_003.py tests/test_task_api_004.py tests/test_task_api_005.py tests/test_task_api_006.py tests/test_task_api_007.py tests/test_task_fsm_001.py tests/test_task_obs_001.py tests/test_task_rag_001.py -q"
+  ],
+  "results": [
+    "3 passed in 0.41s",
+    "26 passed in 1.38s"
+  ],
+  "notes": [
+    "Broader suite required installing reportlab in the local verification venv because export tests import it at module load time."
+  ]
+}

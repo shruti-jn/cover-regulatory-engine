@@ -8,7 +8,7 @@ from datetime import datetime
 
 from pydantic import Field
 
-from src.schemas.base import BaseSchema, UUIDSchema, TimestampedSchema
+from src.schemas.base import BaseSchema
 
 
 class IngestionStatus:
@@ -22,8 +22,8 @@ class IngestionStatus:
 class TriggerIngestionRequest(BaseSchema):
     """Request to trigger document ingestion."""
 
-    document_url: str = Field(..., description="URL of the document to ingest")
-    jurisdiction: str = Field(..., description="Jurisdiction of the document")
+    document_url: str = Field(..., min_length=1, description="URL of the document to ingest")
+    jurisdiction: str = Field(..., min_length=1, description="Jurisdiction of the document")
 
 
 class TriggerIngestionResponse(BaseSchema):
@@ -37,7 +37,7 @@ class IngestionStatusResponse(BaseSchema):
 
     job_id: UUID
     status: str = Field(..., description="QUEUED, PROCESSING, COMPLETED, or FAILED")
-    progress: Optional[int] = Field(None, description="Progress percentage (0-100)")
+    progress: Optional[int] = Field(None, ge=0, le=100, description="Progress percentage (0-100)")
     documents_processed: Optional[int] = None
     error_count: Optional[int] = None
     started_at: Optional[datetime] = None

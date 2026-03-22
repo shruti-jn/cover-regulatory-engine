@@ -1,0 +1,35 @@
+{
+  "task_id": "TASK-API-008",
+  "round": 1,
+  "status": "pass",
+  "verification_type": "runnable_backend_tests",
+  "summary": "Replaced admin ingestion placeholders with authenticated queue/status endpoints wired to the ingestion service and background worker.",
+  "assertions_verified": [
+    {
+      "assertion_id": "TASK-API-008-A1",
+      "status": "pass",
+      "evidence": "tests/test_task_api_008.py::test_require_admin_rejects_missing_authorization"
+    },
+    {
+      "assertion_id": "TASK-API-008-A2",
+      "status": "pass",
+      "evidence": "tests/test_task_api_008.py::test_trigger_ingestion_returns_accepted_job_id"
+    },
+    {
+      "assertion_id": "TASK-API-008-A3",
+      "status": "pass",
+      "evidence": "tests/test_task_api_008.py::test_get_ingestion_status_returns_current_job_state"
+    }
+  ],
+  "commands": [
+    ".venv312/bin/pytest tests/test_task_api_008.py -q",
+    ".venv312/bin/pytest tests/test_task_api_003.py tests/test_task_api_004.py tests/test_task_api_005.py tests/test_task_api_006.py tests/test_task_api_007.py tests/test_task_api_008.py tests/test_task_fsm_001.py tests/test_task_obs_001.py tests/test_task_rag_001.py -q"
+  ],
+  "results": [
+    "4 passed in 0.51s",
+    "30 passed in 0.57s"
+  ],
+  "notes": [
+    "Background task execution is stubbed in the route test to verify request/response behavior without requiring a live database connection."
+  ]
+}

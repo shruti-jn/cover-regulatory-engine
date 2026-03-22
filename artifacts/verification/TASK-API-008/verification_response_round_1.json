@@ -1,0 +1,13 @@
+{
+  "task_id": "TASK-API-008",
+  "round": 1,
+  "verifier": "codex",
+  "review_mode": "independent_task_verification",
+  "finding_count": 0,
+  "findings": [],
+  "residual_risks": [
+    "Background processing currently uses FastAPI background tasks rather than an external durable queue.",
+    "Idempotency is validated at the request boundary but not yet persisted on ingestion jobs."
+  ],
+  "decision": "ready_for_merge"
+}

@@ -1,0 +1,20 @@
+{
+  "task_id": "TASK-API-008",
+  "round": 1,
+  "status": "requested",
+  "requested_review_type": "findings_first_code_review",
+  "scope": [
+    "src/api/admin/",
+    "src/schemas/admin.py"
+  ],
+  "focus_areas": [
+    "admin authentication behavior",
+    "queued ingestion trigger semantics and background execution",
+    "status response correctness",
+    "production-minded error handling and traceability"
+  ],
+  "artifacts": [
+    "artifacts/verification/TASK-API-008/verification_result_round_1.json",
+    "artifacts/verification/TASK-API-008/verification_response_round_1.json"
+  ]
+}
