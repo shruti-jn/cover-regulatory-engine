@@ -1,0 +1,26 @@
+{
+  "verification_id": "demo-hardening-round-1-2026-03-22",
+  "result": "PASS_WITH_NOTES",
+  "summary": "Frontend demo-hardening pass completed with a new multi-parcel architect/sales workstation, passing frontend tests, passing production build, and captured screenshot evidence.",
+  "checks": [
+    {
+      "name": "frontend_tests",
+      "status": "PASS",
+      "evidence": "cd /Users/shruti/Software/cover-regulatory-engine/frontend && npm test -- --run"
+    },
+    {
+      "name": "frontend_build",
+      "status": "PASS",
+      "evidence": "cd /Users/shruti/Software/cover-regulatory-engine/frontend && npm run build"
+    },
+    {
+      "name": "frontend_screenshot",
+      "status": "PASS",
+      "evidence": "/Users/shruti/Software/cover-regulatory-engine/artifacts/verification/demo_workspace_round_4.png"
+    }
+  ],
+  "notes": [
+    "The current parcel corpus is a curated demo dataset aligned to PRD archetypes and is documented as demo-only, not as a verified production source.",
+    "Vite reports a large ParcelMap chunk because MapLibre remains the dominant frontend dependency."
+  ]
+}

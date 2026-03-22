@@ -1,8 +1,9 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { demoParcels } from "../../data/demoStudio";
 import { ParcelLookupWorkspace } from "./ParcelLookupWorkspace";
 
 vi.mock("../../components/map/ParcelMap", () => ({
@@ -10,37 +11,26 @@ vi.mock("../../components/map/ParcelMap", () => ({
 }));
 
 describe("ParcelLookupWorkspace", () => {
-  beforeEach(() => {
-    vi.restoreAllMocks();
-  });
-
   afterEach(() => {
     cleanup();
   });
 
-  it("shows the rooftop accuracy flag in the ready state", () => {
-    render(<ParcelLookupWorkspace />);
+  it("shows the selected parcel context and rooftop accuracy flag", () => {
+    render(<ParcelLookupWorkspace parcels={demoParcels} selectedParcelId="parcel-a" onSelectParcel={vi.fn()} />);
 
     expect(screen.getByTestId("accuracy-flag")).toHaveTextContent("ROOFTOP");
+    expect(screen.getByText("Map-first parcel review")).toBeInTheDocument();
     expect(screen.getAllByText("1321 Lucile Ave, Los Angeles, CA 90026").length).toBeGreaterThan(0);
   });
 
-  it("preserves orientation and shows a recoverable message if lookup fails", async () => {
+  it("switches the active parcel from the comparison surface", async () => {
     const user = userEvent.setup();
-    vi.stubGlobal(
-      "fetch",
-      vi.fn().mockResolvedValue({
-        ok: false,
-      }),
-    );
+    const onSelectParcel = vi.fn();
 
-    render(<ParcelLookupWorkspace />);
-    await user.clear(screen.getByLabelText("Address or APN"));
-    await user.type(screen.getByLabelText("Address or APN"), "1 Failed Lookup Ave");
-    await user.click(screen.getByRole("button", { name: "Locate parcel" }));
+    render(<ParcelLookupWorkspace parcels={demoParcels} selectedParcelId="parcel-a" onSelectParcel={onSelectParcel} />);
+    await user.click(screen.getByRole("button", { name: /parcel c/i }));
 
-    expect(screen.getByText(/Live parcel services are unavailable right now/)).toBeInTheDocument();
-    expect(screen.getByTestId("accuracy-flag")).toHaveTextContent("ROOFTOP");
+    expect(onSelectParcel).toHaveBeenCalledWith("parcel-c");
     expect(screen.getByTestId("parcel-map")).toBeInTheDocument();
   });
 });

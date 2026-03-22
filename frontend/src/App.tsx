@@ -1,65 +1,72 @@
-import { ParcelLookupWorkspace } from "./features/parcel-lookup/ParcelLookupWorkspace";
-import { AssessmentWorkspace } from "./features/assessment/AssessmentWorkspace";
+import { useState } from "react";
 
-const searchPills = ["90026", "RS-1", "ADU", "HPOZ"];
+import { demoParcels, studioMarkers } from "./data/demoStudio";
+import { AssessmentWorkspace } from "./features/assessment/AssessmentWorkspace";
+import { ParcelLookupWorkspace } from "./features/parcel-lookup/ParcelLookupWorkspace";
 
 export default function App() {
+  const [selectedParcelId, setSelectedParcelId] = useState(demoParcels[0].id);
+  const [audienceMode, setAudienceMode] = useState<"architect" | "sales">("architect");
+  const selectedParcel = demoParcels.find((parcel) => parcel.id === selectedParcelId) ?? demoParcels[0];
+
   return (
     <div className="app-shell">
-      <header className="topbar" id="search-bar">
-        <div>
+      <header className="studio-header">
+        <div className="studio-header-copy">
           <p className="eyebrow">Cover regulatory engine</p>
-          <h1>Project buildability workstation</h1>
+          <h1>Buildability workstation</h1>
+          <p>
+            A parcel-native review surface for architects and sales teams to understand feasibility, explain risk, and hand off a deterministic client story.
+          </p>
         </div>
-        <div className="search-area">
-          <label className="search-field">
-            <span className="search-label">Address or APN</span>
-            <input defaultValue="1321 Lucile Ave, Los Angeles, CA" aria-label="Address or APN" />
-          </label>
-          <button className="primary-action" type="button">
-            Review parcel
-          </button>
+        <div className="studio-header-controls">
+          <div className="studio-banner-markers">
+            {studioMarkers.map((marker) => (
+              <span key={marker} className="context-chip studio-chip">
+                {marker}
+              </span>
+            ))}
+          </div>
+          <div className="audience-toggle" role="tablist" aria-label="Audience mode">
+            {(["architect", "sales"] as const).map((mode) => (
+              <button
+                key={mode}
+                type="button"
+                role="tab"
+                aria-selected={audienceMode === mode}
+                className={audienceMode === mode ? "audience-toggle-active" : ""}
+                onClick={() => setAudienceMode(mode)}
+              >
+                {mode === "architect" ? "Architect mode" : "Sales mode"}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
+      <section className="mission-strip" aria-label="How Cover works">
+        <div className="mission-card">
+          <span className="eyebrow">1. Resolve parcel</span>
+          <strong>{selectedParcel.address}</strong>
+        </div>
+        <div className="mission-card">
+          <span className="eyebrow">2. Apply rules</span>
+          <strong>{selectedParcel.zone}{selectedParcel.overlays.length > 0 ? ` + ${selectedParcel.overlays.join(" + ")}` : ""}</strong>
+        </div>
+        <div className="mission-card">
+          <span className="eyebrow">3. Explain recommendation</span>
+          <strong>{selectedParcel.verdictTitle}</strong>
+        </div>
+      </section>
+
       <main className="workspace-grid" id="workspace-shell">
-        <section className="summary-rail" id="hero-summary">
-          <div className="summary-card verdict-card">
-            <div>
-              <p className="eyebrow">Quick verdict</p>
-              <h2>Likely ADU-ready with hillside caution</h2>
-            </div>
-            <div className="metric-row">
-              <div>
-                <span className="metric-value">0.84</span>
-                <span className="metric-label">confidence</span>
-              </div>
-              <div>
-                <span className="metric-value">3</span>
-                <span className="metric-label">active constraints</span>
-              </div>
-              <div>
-                <span className="metric-value">1</span>
-                <span className="metric-label">needs review</span>
-              </div>
-            </div>
-          </div>
+        <ParcelLookupWorkspace
+          parcels={demoParcels}
+          selectedParcelId={selectedParcelId}
+          onSelectParcel={setSelectedParcelId}
+        />
 
-          <div className="summary-card chip-card">
-            <p className="eyebrow">Recent context</p>
-            <div className="chip-row">
-              {searchPills.map((pill) => (
-                <span key={pill} className="context-chip">
-                  {pill}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <ParcelLookupWorkspace />
-
-        <AssessmentWorkspace />
+        <AssessmentWorkspace parcel={selectedParcel} audienceMode={audienceMode} />
       </main>
     </div>
   );

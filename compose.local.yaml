@@ -1,0 +1,22 @@
+services:
+  db:
+    build:
+      context: .
+      dockerfile: docker/local-postgres.Dockerfile
+    container_name: cover-local-db
+    environment:
+      POSTGRES_DB: cover
+      POSTGRES_USER: cover
+      POSTGRES_PASSWORD: cover
+    ports:
+      - "5433:5432"
+    volumes:
+      - cover_local_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cover -d cover"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  cover_local_db_data:

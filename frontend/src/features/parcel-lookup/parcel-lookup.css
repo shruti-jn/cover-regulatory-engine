@@ -2,46 +2,98 @@
   display: grid;
   gap: var(--space-6);
   grid-area: map;
-  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.72fr);
+  grid-template-columns: minmax(0, 1.5fr) minmax(320px, 0.82fr);
   grid-template-areas:
     "controls controls"
     "map facts";
 }
 
 .lookup-controls {
-  align-items: center;
-  background: rgba(255, 253, 248, 0.76);
-  border: 1px solid rgba(216, 210, 200, 0.82);
-  border-radius: var(--radius-panel);
-  box-shadow: var(--shadow-panel);
-  display: grid;
-  gap: var(--space-4);
-  grid-area: controls;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
-  padding: var(--space-6);
-}
-
-.lookup-form {
-  align-items: end;
-  display: grid;
-  gap: var(--space-4);
-  grid-template-columns: minmax(0, 1fr) auto;
-}
-
-.search-field-parcel {
-  margin: 0;
-}
-
-.lookup-meta {
   display: grid;
   gap: 0.75rem;
+  grid-area: controls;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
 }
 
-.accuracy-cluster {
+.lookup-header-copy {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.lookup-header-copy h2 {
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  line-height: 1;
+}
+
+.lookup-header-copy p:last-child {
+  color: var(--color-muted);
+  margin: 0;
+  max-width: 28rem;
+}
+
+.parcel-selector {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.parcel-chip {
+  align-items: start;
+  background: rgba(255, 252, 246, 0.74);
+  border: 1px solid rgba(221, 212, 197, 0.82);
+  border-radius: 20px;
+  color: var(--color-ink);
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+}
+
+.parcel-chip span {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+}
+
+.parcel-chip-active {
+  background: rgba(255, 251, 243, 0.96);
+  border-color: rgba(93, 127, 113, 0.52);
+  box-shadow: inset 0 0 0 1px rgba(93, 127, 113, 0.2), var(--shadow-panel);
+}
+
+.parcel-map-panel {
+  display: grid;
+  gap: 1rem;
+  grid-area: map;
+}
+
+.map-stage-header {
+  align-items: start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.map-stage-header h3 {
+  font-size: clamp(1.2rem, 1.5vw, 1.6rem);
+  margin-top: 0.15rem;
+}
+
+.map-stage-metadata {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: end;
+}
+
+.accuracy-cluster,
+.map-stage-note {
   align-items: start;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+}
+
+.map-stage-note strong {
+  font-family: var(--font-display);
 }
 
 .accuracy-pill {
@@ -53,36 +105,21 @@
 }
 
 .accuracy-rooftop {
-  background: rgba(62, 107, 87, 0.12);
+  background: rgba(56, 102, 82, 0.12);
   color: var(--color-success);
 }
 
 .accuracy-interpolated {
-  background: rgba(157, 107, 47, 0.12);
+  background: rgba(147, 98, 43, 0.12);
   color: var(--color-warning);
-}
-
-.lookup-hint p {
-  color: var(--color-muted);
-  margin: 0;
-}
-
-.recoverable-message {
-  color: var(--color-danger);
-}
-
-.parcel-map-panel {
-  display: grid;
-  gap: 1rem;
-  grid-area: map;
 }
 
 .parcel-map-frame {
   background: rgba(255, 253, 248, 0.76);
-  border: 1px solid rgba(216, 210, 200, 0.82);
+  border: 1px solid rgba(221, 212, 197, 0.82);
   border-radius: var(--radius-panel);
   box-shadow: var(--shadow-panel);
-  min-height: 30rem;
+  min-height: 36rem;
   overflow: hidden;
   position: relative;
 }
@@ -96,7 +133,7 @@
 
 .parcel-map-canvas {
   height: 100%;
-  min-height: 30rem;
+  min-height: 36rem;
   width: 100%;
 }
 
@@ -113,12 +150,37 @@
   position: absolute;
 }
 
-.map-confirmation-card {
+.map-overlay-strip {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.map-overlay-strip > div,
+.map-confirmation-card,
+.comparison-row {
   background: rgba(255, 253, 248, 0.76);
-  border: 1px solid rgba(216, 210, 200, 0.82);
+  border: 1px solid rgba(221, 212, 197, 0.82);
   border-radius: 18px;
   box-shadow: var(--shadow-panel);
   padding: 1rem 1.1rem;
+}
+
+.overlay-label,
+.site-sheet-grid span {
+  color: var(--color-muted);
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+.map-confirmation-card {
+  align-items: start;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.7fr);
 }
 
 .map-confirmation-card p {
@@ -126,10 +188,84 @@
   margin: 0.45rem 0 0;
 }
 
+.confirmation-facts {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.confirmation-facts div {
+  border-top: 1px solid rgba(221, 212, 197, 0.7);
+  padding-top: 0.75rem;
+}
+
+.confirmation-facts span {
+  color: var(--color-muted);
+  display: block;
+  font-size: 0.78rem;
+  margin-bottom: 0.25rem;
+}
+
 .parcel-facts-panel {
   display: grid;
   gap: var(--space-6);
   grid-area: facts;
+}
+
+.comparison-table {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.comparison-table-header,
+.comparison-row {
+  align-items: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 0.7fr));
+  text-align: left;
+}
+
+.comparison-table-header {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  padding: 0 0.2rem;
+  text-transform: uppercase;
+}
+
+.comparison-row div {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.comparison-row div span {
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+.comparison-row-active {
+  border-color: rgba(93, 127, 113, 0.52);
+  box-shadow: inset 0 0 0 1px rgba(93, 127, 113, 0.18), var(--shadow-panel);
+}
+
+.site-sheet-card {
+  display: grid;
+  gap: 1rem;
+}
+
+.site-sheet-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.site-sheet-grid > div {
+  background: rgba(255, 253, 248, 0.76);
+  border: 1px solid rgba(221, 212, 197, 0.82);
+  border-radius: 18px;
+  box-shadow: var(--shadow-panel);
+  padding: 1rem 1.1rem;
+}
+
+.site-sheet-grid strong {
+  line-height: 1.35;
 }
 
 @media (max-width: 1100px) {
@@ -143,8 +279,27 @@
   }
 }
 
-@media (max-width: 720px) {
-  .lookup-form {
+@media (max-width: 860px) {
+  .map-overlay-strip,
+  .parcel-selector,
+  .comparison-table-header,
+  .comparison-row,
+  .map-confirmation-card {
     grid-template-columns: 1fr;
+  }
+
+  .map-stage-header {
+    flex-direction: column;
+  }
+
+  .map-stage-metadata {
+    justify-items: start;
+  }
+}
+
+@media (max-width: 720px) {
+  .parcel-map-frame,
+  .parcel-map-canvas {
+    min-height: 26rem;
   }
 }

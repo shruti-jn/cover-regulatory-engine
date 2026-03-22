@@ -22,7 +22,13 @@ def upgrade() -> None:
 
     # Set default HNSW search parameters for the session
     # This affects recall vs speed tradeoff
-    op.execute("ALTER DATABASE CURRENT SET hnsw.ef_search = 64")
+    op.execute("""
+        DO $$
+        BEGIN
+            EXECUTE format('ALTER DATABASE %I SET hnsw.ef_search = 64', current_database());
+        END
+        $$;
+    """)
 
     # Create a function for efficient batch similarity search
     # This is a helper function that can be used for complex queries
