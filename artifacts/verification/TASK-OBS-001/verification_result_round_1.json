@@ -1,0 +1,26 @@
+{
+  "task_id": "TASK-OBS-001",
+  "round": 1,
+  "timestamp": "2026-03-21T11:35:00-05:00",
+  "status": "pass_with_warnings",
+  "verification_type": "runtime_verification",
+  "checks": [
+    {
+      "name": "observability_tests",
+      "status": "pass",
+      "evidence": ".venv312/bin/pytest tests/test_task_api_003.py tests/test_task_fsm_001.py tests/test_task_api_005.py tests/test_task_api_004.py tests/test_task_api_007.py tests/test_task_api_006.py tests/test_task_obs_001.py -q",
+      "details": "23 passed in 2.84s"
+    },
+    {
+      "name": "observability_imports",
+      "status": "pass",
+      "evidence": ".venv312/bin/python -c 'import importlib; [importlib.import_module(m) for m in [\"src.main\", \"src.core.observability\", \"src.core.middleware.logging\"]]'"
+    }
+  ],
+  "warnings": [
+    {
+      "type": "partial_instrumentation",
+      "summary": "This task establishes the observability registry and required log helpers, but some downstream features still need to call these helpers explicitly to emit all required domain-specific events at runtime."
+    }
+  ]
+}
