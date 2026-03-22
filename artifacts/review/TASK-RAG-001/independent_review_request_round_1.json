@@ -1,0 +1,20 @@
+{
+  "task_id": "TASK-RAG-001",
+  "round": 1,
+  "status": "requested",
+  "requested_review_type": "findings_first_code_review",
+  "scope": [
+    "src/services/ingestion/",
+    "src/workers/rag/"
+  ],
+  "focus_areas": [
+    "checksum-based deduplication behavior",
+    "deterministic rule persistence and provenance linkage",
+    "job status transitions and failure handling",
+    "traceability and production-minded logging"
+  ],
+  "artifacts": [
+    "artifacts/verification/TASK-RAG-001/verification_result_round_1.json",
+    "artifacts/verification/TASK-RAG-001/verification_response_round_1.json"
+  ]
+}
