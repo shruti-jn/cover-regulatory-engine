@@ -26,7 +26,7 @@ def upgrade() -> None:
     
     # Enable required extensions
     op.execute("CREATE EXTENSION IF NOT EXISTS postgis")
-    op.execute("CREATE EXTENSION IF NOT EXISTS pgvector")
+    op.execute("CREATE EXTENSION IF NOT EXISTS vector")
     
     # Create users table
     op.create_table(
@@ -170,5 +170,5 @@ def downgrade() -> None:
     op.drop_table("users")
     
     # Drop extensions (optional - usually kept)
-    # op.execute("DROP EXTENSION IF EXISTS pgvector")
+    # op.execute("DROP EXTENSION IF EXISTS vector")
     # op.execute("DROP EXTENSION IF EXISTS postgis")

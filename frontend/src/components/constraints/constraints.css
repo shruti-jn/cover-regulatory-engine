@@ -15,7 +15,7 @@
 }
 
 .provenance-deterministic {
-  background: rgba(62, 107, 87, 0.12);
+  background: rgba(56, 102, 82, 0.12);
   color: var(--color-success);
 }
 
@@ -24,7 +24,7 @@
 }
 
 .provenance-interpreted {
-  background: rgba(157, 107, 47, 0.12);
+  background: rgba(147, 98, 43, 0.12);
   color: var(--color-warning);
 }
 
@@ -33,7 +33,7 @@
 }
 
 .provenance-unresolved {
-  background: rgba(157, 77, 68, 0.12);
+  background: rgba(149, 70, 61, 0.12);
   color: var(--color-danger);
 }
 
@@ -42,7 +42,8 @@
 }
 
 .constraint-card {
-  border: 1px solid rgba(216, 210, 200, 0.75);
+  background: rgba(255, 253, 248, 0.68);
+  border: 1px solid rgba(221, 212, 197, 0.75);
   border-radius: 20px;
   display: grid;
   gap: 0.85rem;
@@ -57,8 +58,7 @@
 }
 
 .constraint-value {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   margin: 0;
 }
 
@@ -76,9 +76,16 @@
   border: 0;
   color: var(--color-accent-sage);
   padding: 0;
+  text-align: right;
 }
 
 .constraint-evidence {
   color: var(--color-muted);
   margin: 0;
+}
+
+.constraint-card:hover {
+  border-color: rgba(124, 157, 176, 0.42);
+  transform: translateY(-1px);
+  transition: transform 160ms ease, border-color 160ms ease;
 }

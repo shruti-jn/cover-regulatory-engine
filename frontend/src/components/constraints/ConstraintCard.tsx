@@ -27,7 +27,7 @@ export function ConstraintCard({ constraint }: ConstraintCardProps) {
       <p className="constraint-value">{constraint.valueLabel}</p>
       <div className="constraint-meta">
         <span>{Math.round(constraint.confidenceScore * 100)}% confidence</span>
-        <button type="button" className="citation-link">
+        <button type="button" className="citation-link" aria-label={`Open citation ${constraint.citationLabel}`}>
           {constraint.citationLabel}
         </button>
       </div>
