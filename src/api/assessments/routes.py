@@ -27,11 +27,8 @@ from src.schemas.assessment import (
     DiffScenarioResponse,
     ScenarioDiff,
     ExportResponse,
-    SubmitFeedbackRequest,
-    SubmitFeedbackResponse,
 )
 from src.services.assessments import get_assessment_service
-from src.core.exceptions import BadRequestException
 
 logger = structlog.get_logger()
 router = APIRouter(prefix="/api/v1", tags=["assessments"])
@@ -110,28 +107,3 @@ async def export_assessment(
         unresolved_items=[],
     )
 
-
-@router.post("/assessments/{id}/feedback", response_model=SubmitFeedbackResponse)
-async def submit_feedback(
-    id: UUID,
-    request: SubmitFeedbackRequest,
-    idempotency_key: str = Header(..., alias="Idempotency-Key"),
-    db: AsyncSession = Depends(get_db),
-):
-    """
-    Submit feedback on an assessment.
-
-    Requires idempotency key to prevent duplicate submissions.
-    """
-    logger.info(
-        "submit_feedback",
-        assessment_id=id,
-        idempotency_key=idempotency_key,
-    )
-
-    if not idempotency_key.strip():
-        raise BadRequestException("Idempotency key is required", field="Idempotency-Key")
-
-    return SubmitFeedbackResponse(
-        feedback_id=UUID("12345678-1234-1234-1234-123456789def"),
-    )
