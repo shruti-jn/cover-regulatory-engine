@@ -6,7 +6,7 @@ from uuid import UUID
 from typing import TYPE_CHECKING
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import String, Text, ForeignKey
+from sqlalchemy import String, Text, ForeignKey, UniqueConstraint
 from sqlalchemy.dialects.postgresql import ENUM
 
 from src.db.base import Base
@@ -31,6 +31,9 @@ class Feedback(Base):
     """
 
     __tablename__ = "feedback"
+    __table_args__ = (
+        UniqueConstraint("assessment_id", "idempotency_key", name="uq_feedback_assessment_idempotency_key"),
+    )
 
     # User who provided the feedback
     user_id: Mapped[UUID] = mapped_column(
@@ -48,6 +51,9 @@ class Feedback(Base):
 
     # Feedback comment text
     comment: Mapped[str] = mapped_column(Text, nullable=False)
+
+    # Idempotency key for safe replay handling
+    idempotency_key: Mapped[str] = mapped_column(String(255), nullable=False)
 
     # Feedback status
     status: Mapped[str] = mapped_column(
