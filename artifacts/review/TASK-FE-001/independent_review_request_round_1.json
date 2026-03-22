@@ -1,0 +1,20 @@
+{
+  "task_id": "TASK-FE-001",
+  "round": 1,
+  "status": "requested",
+  "requested_review_type": "findings_first_code_review",
+  "scope": [
+    "frontend/"
+  ],
+  "focus_areas": [
+    "split-view information hierarchy",
+    "architect-grade visual direction",
+    "frontend scaffold correctness with Vite/React/TypeScript",
+    "readiness for upcoming map-driven parcel workflows"
+  ],
+  "artifacts": [
+    "artifacts/verification/TASK-FE-001/verification_result_round_1.json",
+    "artifacts/verification/TASK-FE-001/verification_response_round_1.json",
+    "artifacts/verification/TASK-FE-001/frontend_shell_round_1.png"
+  ]
+}
