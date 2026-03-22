@@ -1,0 +1,7 @@
+docker build -f docker/frontend.Dockerfile -t cover-frontend:test .
+result: passed
+notes: built React frontend with node:20-alpine builder and nginx runtime image.
+
+docker build -f docker/backend.Dockerfile -t cover-backend:test .
+result: passed
+notes: built FastAPI backend with python:3.11-slim builder/runtime stages.

@@ -1,0 +1,16 @@
+{
+  "task_id": "TASK-DOCKER-001",
+  "review_type": "independent_code_review_request",
+  "status": "requested",
+  "focus_areas": [
+    "Docker multi-stage correctness",
+    "Railway deployment topology fidelity",
+    "container runtime assumptions",
+    "scope compliance and absence of AWS-specific infrastructure"
+  ],
+  "artifacts": [
+    "artifacts/verification/TASK-DOCKER-001/verification_result_round_1.json",
+    "artifacts/verification/TASK-DOCKER-001/verification_response_round_1.json",
+    "artifacts/verification/TASK-DOCKER-001/container_build_log_round_1.txt"
+  ]
+}
